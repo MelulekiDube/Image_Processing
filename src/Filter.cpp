@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-#include "../includes/Image.h"
+#include "../include/Image.h"
 #include <sstream>
 #include <fstream>
 using namespace DBXMEL004;

@@ -14,7 +14,7 @@
 #include <fstream>
 #include <sstream>
 #include <string>
-#include "../includes/Image.h"
+#include "../include/Image.h"
 using namespace std;
 using namespace DBXMEL004;
 
@@ -74,6 +74,8 @@ Image& Image::operator=(const Image& rhs) {
 Image::Image(Image&& rhs) : im_width(move(rhs.im_width)), im_height(move(rhs.im_height)), image_data(new unsigned char[im_height*im_width]) {
     copy(rhs);
     rhs.image_data.reset(nullptr);
+    rhs.im_height = 0;
+    rhs.im_width = 0;
 }
 
 /**
@@ -87,6 +89,8 @@ Image& Image::operator=(Image&& rhs) {
     image_data.reset(new unsigned char[im_height * im_width]);
     copy(rhs);
     rhs.image_data.reset(nullptr);
+    rhs.im_height = 0;
+    rhs.im_width = 0;
     return *this;
 }
 
@@ -189,7 +193,9 @@ Image& Image::operator+=(const Image& rhs) {
     Image::iterator this_beg = this->begin(), this_end = this->end();
     Image::iterator rhs_beg = rhs.begin();
     while (this_beg != this_end) {
-        *(this_beg++) += *(rhs_beg++);
+        int res = *this_beg, rhs_val = *(rhs_beg++);
+        res += (rhs_val);
+        *(this_beg++) = (res > 255) ? 255 : res; //255 will be the upper limit
     }
     return *this;
 }
@@ -214,7 +220,9 @@ Image& Image::operator-=(const Image& rhs) {
     Image::iterator this_beg = this->begin(), this_end = this->end();
     Image::iterator rhs_beg = rhs.begin();
     while (this_beg != this_end) {
-        *(this_beg++) -= *(rhs_beg++);
+        int res = *this_beg, rhs_val = *(rhs_beg++);
+        res -= (rhs_val);
+        *(this_beg++) = (res < 0) ? 0 : res; // for predictability the lower bound is zero
     }
     return *this;
 }
@@ -341,7 +349,6 @@ istream& DBXMEL004::operator>>(istream& in, Image& rhs) {
         }
     }
     ss << temp_string;
-    cout << ss.str() << endl;
     string temps1, temps2;
     istringstream fss(ss.str());
     fss >> temps1 >> ws>>temps2;

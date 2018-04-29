@@ -4,10 +4,6 @@
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
                    projectFiles="true">
-      <logicalFolder name="includes" displayName="includes" projectFiles="true">
-        <itemPath>includes/Image.h</itemPath>
-        <itemPath>includes/catch.hpp</itemPath>
-      </logicalFolder>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
                    displayName="Resource Files"
@@ -19,9 +15,11 @@
       <logicalFolder name="src" displayName="src" projectFiles="true">
         <itemPath>src/Filter.cpp</itemPath>
         <itemPath>src/Image.cpp</itemPath>
-        <itemPath>src/Testingfile.cpp</itemPath>
         <itemPath>src/iterator.cpp</itemPath>
         <itemPath>src/main.cpp</itemPath>
+      </logicalFolder>
+      <logicalFolder name="test" displayName="test" projectFiles="true">
+        <itemPath>test/Testingfile.cpp</itemPath>
       </logicalFolder>
     </logicalFolder>
     <logicalFolder name="TestFiles"
@@ -39,6 +37,7 @@
   <sourceRootList>
     <Elem>src</Elem>
     <Elem>includes</Elem>
+    <Elem>test</Elem>
   </sourceRootList>
   <projectmakefile>Makefile</projectmakefile>
   <confs>
@@ -50,19 +49,15 @@
       </toolsSet>
       <compileType>
       </compileType>
-      <item path="includes/Image.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="includes/catch.hpp" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="src/Filter.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/Image.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="src/Testingfile.cpp" ex="false" tool="1" flavor2="0">
-      </item>
       <item path="src/iterator.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/main.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="test/Testingfile.cpp" ex="false" tool="1" flavor2="0">
       </item>
     </conf>
     <conf name="Release" type="1">
@@ -85,19 +80,15 @@
           <developmentMode>5</developmentMode>
         </asmTool>
       </compileType>
-      <item path="includes/Image.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="includes/catch.hpp" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="src/Filter.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/Image.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="src/Testingfile.cpp" ex="false" tool="1" flavor2="0">
-      </item>
       <item path="src/iterator.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/main.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="test/Testingfile.cpp" ex="false" tool="1" flavor2="0">
       </item>
     </conf>
   </confs>

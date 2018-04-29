@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 #include <cstdlib>
-#include "../includes/Image.h"
+#include "../include/Image.h"
 
 using namespace std;
 using namespace DBXMEL004;
@@ -53,7 +53,7 @@ Image::iterator Image::iterator::operator++(int) {
 }
 
 Image::iterator Image::iterator::operator+(const int& rhs) {
-    iterator temp(*this);// create a temporary iterator object using this iterator object
+    iterator temp(*this); // create a temporary iterator object using this iterator object
     temp.ptr += rhs; // add to it
     return temp; // return the temp object by value to avoid hanging references.
 }
@@ -77,6 +77,10 @@ Image::iterator Image::iterator::operator--(int) {
 
 bool Image::iterator::operator!=(const iterator& rhs) const {
     return this->ptr != rhs.ptr;
+}
+
+bool Image::iterator::operator==(const iterator& rhs) const {
+    return this->ptr == rhs.ptr;
 }
 
 unsigned char* Image::iterator::getval() {

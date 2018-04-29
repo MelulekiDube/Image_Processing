@@ -37,9 +37,9 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 OBJECTFILES= \
 	${OBJECTDIR}/src/Filter.o \
 	${OBJECTDIR}/src/Image.o \
-	${OBJECTDIR}/src/Testingfile.o \
 	${OBJECTDIR}/src/iterator.o \
-	${OBJECTDIR}/src/main.o
+	${OBJECTDIR}/src/main.o \
+	${OBJECTDIR}/test/Testingfile.o
 
 
 # C Compiler Flags
@@ -76,11 +76,6 @@ ${OBJECTDIR}/src/Image.o: src/Image.cpp
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/Image.o src/Image.cpp
 
-${OBJECTDIR}/src/Testingfile.o: src/Testingfile.cpp
-	${MKDIR} -p ${OBJECTDIR}/src
-	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/Testingfile.o src/Testingfile.cpp
-
 ${OBJECTDIR}/src/iterator.o: src/iterator.cpp
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
@@ -90,6 +85,11 @@ ${OBJECTDIR}/src/main.o: src/main.cpp
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/main.o src/main.cpp
+
+${OBJECTDIR}/test/Testingfile.o: test/Testingfile.cpp
+	${MKDIR} -p ${OBJECTDIR}/test
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/test/Testingfile.o test/Testingfile.cpp
 
 # Subprojects
 .build-subprojects:

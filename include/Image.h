@@ -54,6 +54,7 @@ namespace DBXMEL004 {
             iterator operator--(int);
             iterator operator-(const int &rhs);
             bool operator!=(const iterator& rhs) const;
+            bool operator==(const iterator& rhs) const;
         };
         Image(); // Default constructor
         Image(const int w, const int h);
