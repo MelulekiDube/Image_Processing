@@ -76,7 +76,7 @@ namespace DBXMEL004 {
         Image operator+(const Image& rhs);
         Image operator-(const Image& rhs);
         Image& operator!();
-        Image& operator/(Image& rhs);
+        Image operator/(Image& rhs);
         Image& operator*(const int& f);
         Image operator%(filter& temp);
         /*Methods for the iterator*/

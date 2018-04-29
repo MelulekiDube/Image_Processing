@@ -4,6 +4,10 @@
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
                    projectFiles="true">
+      <logicalFolder name="include" displayName="include" projectFiles="true">
+        <itemPath>include/Image.h</itemPath>
+        <itemPath>include/catch.hpp</itemPath>
+      </logicalFolder>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
                    displayName="Resource Files"
@@ -38,6 +42,7 @@
     <Elem>src</Elem>
     <Elem>includes</Elem>
     <Elem>test</Elem>
+    <Elem>include</Elem>
   </sourceRootList>
   <projectmakefile>Makefile</projectmakefile>
   <confs>
@@ -49,6 +54,10 @@
       </toolsSet>
       <compileType>
       </compileType>
+      <item path="include/Image.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="include/catch.hpp" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="src/Filter.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/Image.cpp" ex="false" tool="1" flavor2="0">
@@ -80,6 +89,10 @@
           <developmentMode>5</developmentMode>
         </asmTool>
       </compileType>
+      <item path="include/Image.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="include/catch.hpp" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="src/Filter.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/Image.cpp" ex="false" tool="1" flavor2="0">

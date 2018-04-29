@@ -193,9 +193,7 @@ Image& Image::operator+=(const Image& rhs) {
     Image::iterator this_beg = this->begin(), this_end = this->end();
     Image::iterator rhs_beg = rhs.begin();
     while (this_beg != this_end) {
-        int res = *this_beg, rhs_val = *(rhs_beg++);
-        res += (rhs_val);
-        *(this_beg++) = (res > 255) ? 255 : res; //255 will be the upper limit
+        *(this_beg++) += *(rhs_beg++);
     }
     return *this;
 }
@@ -206,8 +204,14 @@ Image& Image::operator+=(const Image& rhs) {
  * @return new image which is the sum of two images
  */
 Image Image::operator+(const Image& rhs) {
-    Image temp_image(*this);
-    temp_image.operator+=(rhs); // use the += operator 
+    Image temp_image;
+    if (rhs.get_image_size() == this->get_image_size()) {
+        temp_image = *this;
+        temp_image.operator+=(rhs); // use the += operator 
+    } else {
+        cout << "The images are of different lengths\nReturned image is 0 and contains nothing. Make Sure you pass equal length images" << endl;
+
+    }
     return temp_image;
 }
 
@@ -220,9 +224,7 @@ Image& Image::operator-=(const Image& rhs) {
     Image::iterator this_beg = this->begin(), this_end = this->end();
     Image::iterator rhs_beg = rhs.begin();
     while (this_beg != this_end) {
-        int res = *this_beg, rhs_val = *(rhs_beg++);
-        res -= (rhs_val);
-        *(this_beg++) = (res < 0) ? 0 : res; // for predictability the lower bound is zero
+        *(this_beg++) -= *(rhs_beg++);
     }
     return *this;
 }
@@ -233,8 +235,13 @@ Image& Image::operator-=(const Image& rhs) {
  * @return 
  */
 Image Image::operator-(const Image& rhs) {
-    Image temp_image(*this);
-    temp_image.operator-=(rhs);
+    Image temp_image;
+    if (rhs.get_image_size() == this->get_image_size()) {
+        temp_image = (*this);
+        temp_image.operator-=(rhs);
+    } else {
+        cout << "The images are of different lengths\nReturned image is 0 and contains nothing. Make Sure you pass equal length images" << endl;
+    }
     return temp_image;
 }
 
@@ -243,17 +250,23 @@ Image Image::operator-(const Image& rhs) {
  * @param rhs image that the we are going to mask this object with
  * @return this object 
  */
-Image& Image::operator/(Image& rhs) {
-    Image::iterator this_beg = this->begin(), this_end = this->end();
-    Image::iterator rhs_beg = rhs.begin();
-    while (this_beg != this_end) {
-        if (*rhs_beg == 255) {
-            *(rhs_beg) = *this_beg;
+Image Image::operator/(Image& rhs) {
+    Image temp_image;
+    if (rhs.get_image_size() == this->get_image_size()) {
+        temp_image = rhs;
+        Image::iterator this_beg = this->begin(), this_end = this->end();
+        Image::iterator rhs_beg = temp_image.begin();
+        while (this_beg != this_end) {
+            if (*rhs_beg == 255) {
+                *(rhs_beg) = *this_beg;
+            }
+            ++rhs_beg;
+            ++this_beg;
         }
-        ++rhs_beg;
-        ++this_beg;
+    } else {
+        cout << "The images are of different lengths\nReturned image is 0 and contains nothing. Make Sure you pass equal length images" << endl;
     }
-    return rhs;
+    return temp_image;
 }
 
 /**
@@ -269,8 +282,8 @@ Image& Image::operator!() {
 }
 
 /**
- * 
- * @param f
+ * Threshhold
+ * @param f the threshold
  * @return 
  */
 Image& Image::operator*(const int& f) {
@@ -287,7 +300,7 @@ Image& Image::operator*(const int& f) {
  * @param f this is a filter object that will be applied to the current image object
  * @return the new filtered image which is seperate from this image object.
  */
-Image Image::operator%(filter& f) {
+Image Image::operator%(filter & f) {
     Image result(im_width, im_height);
     int median = (f.n - 1) / 2;
     int k = 0, m = 0;
@@ -316,7 +329,7 @@ Image Image::operator%(filter& f) {
  * @param rhs the image object that the is to be written into the output stream.
  * @return 
  */
-ostream& DBXMEL004::operator<<(ostream& out, const Image& rhs) {
+ostream & DBXMEL004::operator<<(ostream& out, const Image & rhs) {
     out << rhs.header;
     Image::iterator beg = rhs.begin();
     Image::iterator en = rhs.end();
@@ -333,7 +346,7 @@ ostream& DBXMEL004::operator<<(ostream& out, const Image& rhs) {
  * @param rhs the image where the information from the stream is written to.
  * @return the input stream that is in when done.
  */
-istream& DBXMEL004::operator>>(istream& in, Image& rhs) {
+istream & DBXMEL004::operator>>(istream& in, Image & rhs) {
     string temp_string;
     bool comments_done = false;
     std::getline(in, temp_string);

@@ -5,4 +5,3 @@ Assignment structure:
 	-include/ this contains all the header files. that is all the .h files
 	-bin/ contains the executables that is the imageops_run and the imageops_testing.run
 	resources/ this are the image files and filter file that where used for testing the application
-	
