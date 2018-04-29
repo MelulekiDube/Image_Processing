@@ -247,18 +247,4 @@ TEST_CASE("Image operators") {
         }
         REQUIRE(changed);
     }
-
-    SECTION("Filter images") {
-        Image it(4, 3, arr);
-        filter g;
-        g.n = 3;
-        for(int i=0;i<3;++i){
-            for(int j=0; j<3; ++j){
-                g.filt[i][j] =a[i][j];
-            }
-        }
-        Image result = it % g;
-        Image::iterator ite = result.begin();
-        REQUIRE(*ite == 4);// "test for the 1st item which is an item on the edge
-    }
 }

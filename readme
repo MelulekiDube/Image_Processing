@@ -5,3 +5,17 @@ Assignment structure:
 	-include/ this contains all the header files. that is all the .h files
 	-bin/ contains the executables that is the imageops_run and the imageops_testing.run
 	resources/ this are the image files and filter file that where used for testing the application
+	-output/ this directory is where all the output will be written.
+To run tests use make run_test
+To run the imageops application use bin/imageops.run <option> Outputfile_name
+use make clean to clean all the compiled code and executables.
+
+
+Notes:
+	- when passing the image values for option pass in the file names without including the .pgm extension as this will be added
+	  by the programm when opening the file. This is to so as to ensure that only .pgm files are passed.
+	- When you add images of different size an exception is thrown and there is no image which results from that.
+	- the outputfilename should just contain the name of the file and no directories are allowed. This was done as to ensure that all
+	  files will be placed to the same file.
+	- at every make rule a message is passed to let you know what is happening at a particular time.
+	-for feed back also the user has print statements of the different steps being taken by the application

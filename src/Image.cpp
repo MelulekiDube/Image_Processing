@@ -14,7 +14,11 @@
 #include <fstream>
 #include <sstream>
 #include <string>
+#include <stdexcept>
 #include "../include/Image.h"
+
+//Defines
+#define save_dir "output/"
 using namespace std;
 using namespace DBXMEL004;
 
@@ -71,9 +75,8 @@ Image& Image::operator=(const Image& rhs) {
  * Move constructor
  * @param rhs rvalue reference that is used to construct this object
  */
-Image::Image(Image&& rhs) : im_width(move(rhs.im_width)), im_height(move(rhs.im_height)), image_data(new unsigned char[im_height*im_width]) {
-    copy(rhs);
-    rhs.image_data.reset(nullptr);
+Image::Image(Image&& rhs) : im_width(move(rhs.im_width)), im_height(move(rhs.im_height)), image_data(move(rhs.image_data)) {
+    rhs.image_data.reset(nullptr); //just to be sure that its set to null
     rhs.im_height = 0;
     rhs.im_width = 0;
 }
@@ -86,8 +89,8 @@ Image::Image(Image&& rhs) : im_width(move(rhs.im_width)), im_height(move(rhs.im_
 Image& Image::operator=(Image&& rhs) {
     im_width = move(rhs.im_width);
     im_height = move(rhs.im_height);
-    image_data.reset(new unsigned char[im_height * im_width]);
-    copy(rhs);
+    image_data.reset(nullptr); // first delete wat we are holding
+    image_data = move(rhs.image_data); //then transfer owner ship of the new object     
     rhs.image_data.reset(nullptr);
     rhs.im_height = 0;
     rhs.im_width = 0;
@@ -209,8 +212,8 @@ Image Image::operator+(const Image& rhs) {
         temp_image = *this;
         temp_image.operator+=(rhs); // use the += operator 
     } else {
-        cout << "The images are of different lengths\nReturned image is 0 and contains nothing. Make Sure you pass equal length images" << endl;
-
+        throw std::invalid_argument("\n*****************************************************************************************************************\n"
+                "The images are of different lengths\nReturned image is 0 and contains nothing. Make Sure you pass equal length images\n*****************************************************************************************************************");
     }
     return temp_image;
 }
@@ -240,7 +243,8 @@ Image Image::operator-(const Image& rhs) {
         temp_image = (*this);
         temp_image.operator-=(rhs);
     } else {
-        cout << "The images are of different lengths\nReturned image is 0 and contains nothing. Make Sure you pass equal length images" << endl;
+        throw std::invalid_argument("\n*****************************************************************************************************************\n"
+                "The images are of different lengths\nReturned image is 0 and contains nothing. Make Sure you pass equal length images\n*****************************************************************************************************************");
     }
     return temp_image;
 }
@@ -264,7 +268,8 @@ Image Image::operator/(Image& rhs) {
             ++this_beg;
         }
     } else {
-        cout << "The images are of different lengths\nReturned image is 0 and contains nothing. Make Sure you pass equal length images" << endl;
+        throw std::invalid_argument("\n*****************************************************************************************************************\n"
+                "The images are of different lengths\nReturned image is 0 and contains nothing. Make Sure you pass equal length images\n*****************************************************************************************************************");
     }
     return temp_image;
 }
@@ -399,7 +404,7 @@ void Image::load_image(std::string imageName) {
 void Image::save_image(string imageName) {
     ofstream out_file;
     stringstream ss;
-    ss << imageName << ".pgm";
+    ss << save_dir << imageName << ".pgm";
     out_file.open(ss.str(), ios::binary | ios::out | ios::trunc);
     computer_header();
     out_file << (*this);

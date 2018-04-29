@@ -11,7 +11,7 @@ BINDIR = bin
 CPP =g++
 CPPFLAGS =-std=c++11 -g -Wall
 TARGET=imageops.run
-TEST_TARGET =imageops_testing.run
+TEST_TARGET =$(BINDIR)/imageops_testing.run
 SRC=$(SRCDIR)/Image.cpp $(SRCDIR)/iterator.cpp $(SRCDIR)/Filter.cpp $(SRCDIR)/main.cpp $(TESTDIR)/Testingfile.cpp 
 OBJECTS=$(BUILDDIR)/Image.o $(BUILDDIR)/iterator.o $(BUILDDIR)/Filter.o $(BUILDDIR)/main.o 
 TEST_OBJECTS= $(BUILDDIR)/Image.o $(BUILDDIR)/iterator.o $(BUILDDIR)/Filter.o $(BUILDDIR)/Testingfile.o 
