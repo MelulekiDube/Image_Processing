@@ -164,20 +164,29 @@ TEST_CASE("Image operators") {
 
     SECTION("Adding images") {
         Image image, image2;
+        image.load_image("resources/Lenna_standard");
+        image2.load_image("resources/Lenna_hat_mask");
+        Image result = image + image2;
+        result.save_image("resources/addition");
     }
-    SECTION("Subtracting images"){
-        
+
+    SECTION("Subtracting images") {
+
     }
-    SECTION("Inverting images"){
-        
+
+    SECTION("Inverting images") {
+
     }
-    SECTION("Masking images"){
-        
+
+    SECTION("Masking images") {
+
     }
-    SECTION("Threshing images"){
-        
+
+    SECTION("Threshing images") {
+
     }
-    SECTION("Filter images"){
-        
+
+    SECTION("Filter images") {
+
     }
 }

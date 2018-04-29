@@ -3,24 +3,24 @@
 #Meluleki Dube
 
 #Directories
-SRCDIR=src/
-BUILDDIR=build/
-TESTDIR= test/
-
+SRCDIR=src
+BUILDDIR=build
+TESTDIR= test
+BINDIR = bin
 
 CPP =g++
 CPPFLAGS =-std=c++11 -g -Wall
 TARGET=imageops.run
-TEST_TARGET = imageops_testing.run
-SRC=$(SRCDIR)Image.cpp $(SRCDIR)iterator.cpp $(SRCDIR)Filter.cpp $(SRCDIR)main.cpp $(TESTDIR)Testingfile.cpp 
-OBJECTS=$(BUILDDIR)Image.o $(BUILDDIR)iterator.o $(BUILDDIR)Filter.o $(BUILDDIR)main.o 
-TEST_OBJECTS= $(BUILDDIR)Image.o $(BUILDDIR)iterator.o $(BUILDDIR)Filter.o $(BUILDDIR)Testingfile.o 
+TEST_TARGET =imageops_testing.run
+SRC=$(SRCDIR)/Image.cpp $(SRCDIR)/iterator.cpp $(SRCDIR)/Filter.cpp $(SRCDIR)/main.cpp $(TESTDIR)/Testingfile.cpp 
+OBJECTS=$(BUILDDIR)/Image.o $(BUILDDIR)/iterator.o $(BUILDDIR)/Filter.o $(BUILDDIR)/main.o 
+TEST_OBJECTS= $(BUILDDIR)/Image.o $(BUILDDIR)/iterator.o $(BUILDDIR)/Filter.o $(BUILDDIR)/Testingfile.o 
 
 $(TARGET): $(OBJECTS)
 	@echo "-------------------------------------------------------------------------------------------";
 	@echo "Linking the object files to create imageops.run";
 	$(CPP) $(OBJECTS)-o $@ $(CPPFLAGS)
-	
+	@mv $@ $(BINDIR)
 $(OBJECTS): $(SRC)
 	@echo "-------------------------------------------------------------------------------------------";
 	@echo "Producing Object files";
@@ -40,5 +40,5 @@ run_test:
 
 clean:
 	@echo "Cleaning.............";
-	rm -f -r $(BUILDDIR)*.o *.run
+	rm -f -r $(BUILDDIR)/*.o $(BINDIR)/*.run
 # end of Makefile
