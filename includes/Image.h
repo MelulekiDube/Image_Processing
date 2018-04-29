@@ -17,8 +17,19 @@
 #include <memory>
 #include <iostream>
 #include <string>
-
 namespace DBXMEL004 {
+    class Image;
+    std::ostream& operator<<(std::ostream& out, const DBXMEL004::Image& rhs);
+    std::istream& operator>>(std::istream& in, DBXMEL004::Image& rhs);
+
+    typedef struct filter{
+        int n; // the dimensions of the 2d array with values.
+        float **filt;// this is the 2d array with the filter values
+        filter();
+        filter(const std::string& filename);// constructor to get the file name 
+        float to_fraction(std::string arg); // method to convert the each string read into a fracion.
+        ~filter();
+    }filter;
 
     class Image {
     public:
@@ -27,9 +38,10 @@ namespace DBXMEL004 {
         private:
             unsigned char *ptr;
             // construct only via Image class (begin/end)
+            iterator(unsigned char *p);
+            friend class Image;
         public:
             unsigned char* getval();
-            iterator(unsigned char *p);
             iterator(const iterator & rhs);
             // define overloaded ops: *, ++, --, =
             iterator& operator=(const iterator & rhs);
@@ -55,6 +67,7 @@ namespace DBXMEL004 {
         void load_image(std::string imageName); //loading the image
         virtual ~Image(); // Destructor
         int get_image_size() const;
+        int getIndex(int row, int col)const;
 
         /**Image operators*/
         Image& operator+=(const Image& rhs);
@@ -64,24 +77,26 @@ namespace DBXMEL004 {
         Image& operator!();
         Image& operator/(Image& rhs);
         Image& operator*(const int& f);
-
+        Image operator%(filter& temp);
         /*Methods for the iterator*/
         iterator begin() const;
         iterator end() const;
-
-    private:
-        int im_witdh, im_height;
-        std::unique_ptr<unsigned char [] > image_data; //pointer holding the data for the image
-        std::string comments = "# CREATOR: GIMP PNM Filter Version 1.1\n";
-        std::string header = "P5\n" + comments + std::to_string(im_height) + " "
-        + std::to_string(im_witdh) + "\n" + "255\n";
+        //        friend std::ostream& DBXMEL004::operator<<(std::ostream& out, const DBXMEL004::Image& rhs);
+        //        friend std::istream& DBXMEL004::operator>>(std::istream& in, DBXMEL004::Image& rhs);
 
         void computer_header() {
             header = "P5\n" + comments + std::to_string(im_height) + " "
-                    + std::to_string(im_witdh) + "\n" + "255\n";
+                    + std::to_string(im_width) + "\n" + "255\n";
         }
-        friend std::ostream& operator<<(std::ostream& out, const Image& rhs);
-        friend std::istream& operator>>(std::istream& in, Image& rhs);
+
+    private:
+        int im_width, im_height;
+        std::unique_ptr<unsigned char [] > image_data; //pointer holding the data for the image
+        std::string comments = "# CREATOR: GIMP PNM Filter Version 1.1\n";
+        std::string header = "P5\n" + comments + std::to_string(im_height) + " "
+        + std::to_string(im_width) + "\n" + "255\n";
+        friend std::ostream& DBXMEL004::operator<<(std::ostream& out, const DBXMEL004::Image& rhs);
+        friend std::istream& DBXMEL004::operator>>(std::istream& in, DBXMEL004::Image& rhs);
 
     };
 };

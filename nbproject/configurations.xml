@@ -4,7 +4,10 @@
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
                    projectFiles="true">
-      <itemPath>Image.h</itemPath>
+      <logicalFolder name="includes" displayName="includes" projectFiles="true">
+        <itemPath>includes/Image.h</itemPath>
+        <itemPath>includes/catch.hpp</itemPath>
+      </logicalFolder>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
                    displayName="Resource Files"
@@ -14,6 +17,7 @@
                    displayName="Source Files"
                    projectFiles="true">
       <logicalFolder name="src" displayName="src" projectFiles="true">
+        <itemPath>src/Filter.cpp</itemPath>
         <itemPath>src/Image.cpp</itemPath>
         <itemPath>src/Testingfile.cpp</itemPath>
         <itemPath>src/iterator.cpp</itemPath>
@@ -34,6 +38,7 @@
   </logicalFolder>
   <sourceRootList>
     <Elem>src</Elem>
+    <Elem>includes</Elem>
   </sourceRootList>
   <projectmakefile>Makefile</projectmakefile>
   <confs>
@@ -45,7 +50,11 @@
       </toolsSet>
       <compileType>
       </compileType>
-      <item path="Image.h" ex="false" tool="3" flavor2="0">
+      <item path="includes/Image.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="includes/catch.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/Filter.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/Image.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -76,7 +85,11 @@
           <developmentMode>5</developmentMode>
         </asmTool>
       </compileType>
-      <item path="Image.h" ex="false" tool="3" flavor2="0">
+      <item path="includes/Image.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="includes/catch.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/Filter.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/Image.cpp" ex="false" tool="1" flavor2="0">
       </item>

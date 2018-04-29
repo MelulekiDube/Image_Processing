@@ -35,6 +35,7 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 
 # Object Files
 OBJECTFILES= \
+	${OBJECTDIR}/src/Filter.o \
 	${OBJECTDIR}/src/Image.o \
 	${OBJECTDIR}/src/Testingfile.o \
 	${OBJECTDIR}/src/iterator.o \
@@ -64,6 +65,11 @@ LDLIBSOPTIONS=
 ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/image_processor.exe: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
 	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/image_processor ${OBJECTFILES} ${LDLIBSOPTIONS}
+
+${OBJECTDIR}/src/Filter.o: src/Filter.cpp
+	${MKDIR} -p ${OBJECTDIR}/src
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/Filter.o src/Filter.cpp
 
 ${OBJECTDIR}/src/Image.o: src/Image.cpp
 	${MKDIR} -p ${OBJECTDIR}/src
