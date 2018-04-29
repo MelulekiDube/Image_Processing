@@ -52,14 +52,16 @@ Image::iterator Image::iterator::operator++(int) {
     return temp; // return value before iteration
 }
 
-Image::iterator& Image::iterator::operator+(const int& rhs) {
-    this->ptr += rhs;
-    return *this;
+Image::iterator Image::iterator::operator+(const int& rhs) {
+    iterator temp(*this);// create a temporary iterator object using this iterator object
+    temp.ptr += rhs; // add to it
+    return temp; // return the temp object by value to avoid hanging references.
 }
 
-Image::iterator& Image::iterator::operator-(const int& rhs) {
-    this->ptr -= rhs;
-    return *this;
+Image::iterator Image::iterator::operator-(const int& rhs) {
+    iterator temp(*this); // create a temporary iterator object using this iterator object
+    temp.ptr -= rhs; // subtract from it
+    return temp; // return the temp object by value to avoid hanging references.
 }
 
 Image::iterator& Image::iterator::operator--() {
@@ -74,7 +76,7 @@ Image::iterator Image::iterator::operator--(int) {
 }
 
 bool Image::iterator::operator!=(const iterator& rhs) const {
-    return this->ptr!=rhs.ptr;
+    return this->ptr != rhs.ptr;
 }
 
 unsigned char* Image::iterator::getval() {

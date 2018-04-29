@@ -21,7 +21,9 @@ float a[3][3] = {
     {.25, .125, .25},
     {.25, .125, .25}
 };
-
+TEST_CASE("Test operators for the iterator"){
+    
+}
 TEST_CASE("Testing the iterator") {
     Image im1(2, 3, arr);
     Image i;

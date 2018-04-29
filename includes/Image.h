@@ -22,14 +22,14 @@ namespace DBXMEL004 {
     std::ostream& operator<<(std::ostream& out, const DBXMEL004::Image& rhs);
     std::istream& operator>>(std::istream& in, DBXMEL004::Image& rhs);
 
-    typedef struct filter{
+    typedef struct filter {
         int n; // the dimensions of the 2d array with values.
-        float **filt;// this is the 2d array with the filter values
+        float **filt; // this is the 2d array with the filter values
         filter();
-        filter(const std::string& filename);// constructor to get the file name 
+        filter(const std::string& filename); // constructor to get the file name 
         float to_fraction(std::string arg); // method to convert the each string read into a fracion.
         ~filter();
-    }filter;
+    } filter;
 
     class Image {
     public:
@@ -49,10 +49,10 @@ namespace DBXMEL004 {
             unsigned char& operator*(void) const;
             iterator& operator++();
             iterator operator++(int);
-            iterator& operator+(const int &rhs);
+            iterator operator+(const int &rhs);
             iterator& operator--();
             iterator operator--(int);
-            iterator& operator-(const int &rhs);
+            iterator operator-(const int &rhs);
             bool operator!=(const iterator& rhs) const;
         };
         Image(); // Default constructor
@@ -81,8 +81,8 @@ namespace DBXMEL004 {
         /*Methods for the iterator*/
         iterator begin() const;
         iterator end() const;
-        //        friend std::ostream& DBXMEL004::operator<<(std::ostream& out, const DBXMEL004::Image& rhs);
-        //        friend std::istream& DBXMEL004::operator>>(std::istream& in, DBXMEL004::Image& rhs);
+        friend std::ostream& DBXMEL004::operator<<(std::ostream& out, const DBXMEL004::Image& rhs);
+        friend std::istream& DBXMEL004::operator>>(std::istream& in, DBXMEL004::Image& rhs);
 
         void computer_header() {
             header = "P5\n" + comments + std::to_string(im_height) + " "
@@ -95,9 +95,6 @@ namespace DBXMEL004 {
         std::string comments = "# CREATOR: GIMP PNM Filter Version 1.1\n";
         std::string header = "P5\n" + comments + std::to_string(im_height) + " "
         + std::to_string(im_width) + "\n" + "255\n";
-        friend std::ostream& DBXMEL004::operator<<(std::ostream& out, const DBXMEL004::Image& rhs);
-        friend std::istream& DBXMEL004::operator>>(std::istream& in, DBXMEL004::Image& rhs);
-
     };
 };
 #endif /* IMAGE_H */

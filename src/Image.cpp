@@ -99,6 +99,10 @@ Image::~Image() {
     }
 }
 
+/**
+ * Copies the rhs image to this object. Therefore after the copy both images containg the same data.
+ * @param rhs
+ */
 void Image::copy(const Image& rhs) {
     Image::iterator beg = this->begin(), end = this->end();
     Image::iterator inStart = rhs.begin();
@@ -110,6 +114,10 @@ void Image::copy(const Image& rhs) {
     }
 }
 
+/**
+ * 
+ * @return an iterator object that points to the first object
+ */
 Image::iterator Image::begin() const {
     //define iterator;
     iterator t(image_data.get());
@@ -117,15 +125,30 @@ Image::iterator Image::begin() const {
     return t;
 } // etc
 
+/**
+ * 
+ * @return element 1 pas the last elemtn
+ */
 Image::iterator Image::end() const {
     iterator t(begin() +(get_image_size()));
     return t;
 }
 
+/**
+ * This is to return image size, so as not to be reading the im_widhth and im_height all the time
+ * @return 
+ */
 int Image::get_image_size() const {
     return im_height*im_width;
 }
 
+/**
+ * Since the image data is stored in one block of memory this function gets the index that is needed assuming 2d and
+ * returns the actual index index in the 1d array.
+ * @param col the column needed
+ * @param row the row needed
+ * @return the actual index in the 1d array 
+ */
 int Image::getIndex(int col, int row) const {
     /*if col is less than 0 and row is greater or equal to zero*/
     if (col < 0 && row >= 0) {
@@ -157,6 +180,11 @@ int Image::getIndex(int col, int row) const {
     return ((row * im_width) + col);
 }
 
+/**
+ * Adds this image data by the image passed
+ * @param rhs the image object to be subtracted from
+ * @return this image after addition
+ */
 Image& Image::operator+=(const Image& rhs) {
     Image::iterator this_beg = this->begin(), this_end = this->end();
     Image::iterator rhs_beg = rhs.begin();
@@ -166,12 +194,22 @@ Image& Image::operator+=(const Image& rhs) {
     return *this;
 }
 
+/**
+ * Add to images together
+ * @param rhs image to be added to.
+ * @return new image which is the sum of two images
+ */
 Image Image::operator+(const Image& rhs) {
     Image temp_image(*this);
-    temp_image.operator+=(rhs);
+    temp_image.operator+=(rhs); // use the += operator 
     return temp_image;
 }
 
+/**
+ * Subtracts this image data by the image passed
+ * @param rhs the image object to be subtracted from
+ * @return this image after subtraction
+ */
 Image& Image::operator-=(const Image& rhs) {
     Image::iterator this_beg = this->begin(), this_end = this->end();
     Image::iterator rhs_beg = rhs.begin();
@@ -181,12 +219,22 @@ Image& Image::operator-=(const Image& rhs) {
     return *this;
 }
 
+/**
+ * Subtraction of two images
+ * @param rhs
+ * @return 
+ */
 Image Image::operator-(const Image& rhs) {
     Image temp_image(*this);
     temp_image.operator-=(rhs);
     return temp_image;
 }
 
+/**
+ * Masks this image object with the image object passed.
+ * @param rhs image that the we are going to mask this object with
+ * @return this object 
+ */
 Image& Image::operator/(Image& rhs) {
     Image::iterator this_beg = this->begin(), this_end = this->end();
     Image::iterator rhs_beg = rhs.begin();
@@ -200,6 +248,10 @@ Image& Image::operator/(Image& rhs) {
     return rhs;
 }
 
+/**
+ * Inverts an image
+ * @return the inverted image of the picture
+ */
 Image& Image::operator!() {
     Image::iterator beg = begin(), en = end();
     while (beg != en) {
@@ -208,6 +260,11 @@ Image& Image::operator!() {
     return *this;
 }
 
+/**
+ * 
+ * @param f
+ * @return 
+ */
 Image& Image::operator*(const int& f) {
     Image::iterator beg = begin(), en = end();
     while (beg != en) {
@@ -217,17 +274,22 @@ Image& Image::operator*(const int& f) {
     return *this;
 }
 
-Image Image::operator%(filter& temp) {
+/**
+ * Overload of the % operator so as to filter the image object that calls the method
+ * @param f this is a filter object that will be applied to the current image object
+ * @return the new filtered image which is seperate from this image object.
+ */
+Image Image::operator%(filter& f) {
     Image result(im_width, im_height);
-    int median = (temp.n - 1) / 2;
+    int median = (f.n - 1) / 2;
     int k = 0, m = 0;
     for (int y = 0; y < im_height; ++y) {
         for (int x = 0; x < im_width; ++x) {
             float res = 0;
-            for (int i = 0; i < temp.n; ++i) {
-                for (int j = 0; j < temp.n; ++j) {
-                    k = x - median, m = y - median;
-                    res += image_data.get()[getIndex(k++, m)] * temp.filt[i][j];
+            k = x - median, m = y - median;
+            for (int i = 0; i < f.n; ++i) {
+                for (int j = 0; j < f.n; ++j) {
+                    res += image_data.get()[getIndex(k++, m)] * f.filt[i][j];
                 }
                 k = x;
                 ++m;
@@ -240,6 +302,12 @@ Image Image::operator%(filter& temp) {
     return result;
 }
 
+/**
+ * Overload for the insertion operator that insert data from the image object to the sream.
+ * @param out the output stream to output to
+ * @param rhs the image object that the is to be written into the output stream.
+ * @return 
+ */
 ostream& DBXMEL004::operator<<(ostream& out, const Image& rhs) {
     out << rhs.header;
     Image::iterator beg = rhs.begin();
@@ -251,6 +319,12 @@ ostream& DBXMEL004::operator<<(ostream& out, const Image& rhs) {
     return out;
 }
 
+/**
+ * Overload for the extraction operator so that it extracts data from the stream
+ * @param in the stream with the image information
+ * @param rhs the image where the information from the stream is written to.
+ * @return the input stream that is in when done.
+ */
 istream& DBXMEL004::operator>>(istream& in, Image& rhs) {
     string temp_string;
     bool comments_done = false;
@@ -285,7 +359,7 @@ istream& DBXMEL004::operator>>(istream& in, Image& rhs) {
 }
 
 /**
- * 
+ * Method to load the image
  * @param imageName
  */
 void Image::load_image(std::string imageName) {
